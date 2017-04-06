@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ACZ</name>
+    </assembly>
+    <members>
+        <member name="T:ACZ.Acz">
+             <summary> Clase genérica para funciones de actualización.</summary>
+             
+             <remarks>
+             Información devuelta, según la función:
+                 this.
+            
+             Gestión de la operación realizada:
+                 Resultado de la llamada:
+                     - S: Operación OK.
+                     - N: Operación no realizada.
+                     - C: Error BBDD / Error de programa.
+            
+                 Mensajes devueltos:
+                     - this.UsrErrorC, código de error (0: OK).
+                     - this.UsrError, texto del error.
+                     - this.UsrErrorE, texto error extendido - pila de llamadas.
+             </remarks>
+        </member>
+        <member name="M:ACZ.Acz.ACZGetOcupacion(System.String)">
+             <summary> Leer una ocupación a partir de si ID Row.</summary>
+             <param name="RowID"></param>
+             <returns>
+             Resultado (S-Existe la ocupación/N-No existe la ocupación/C-Error)
+            </returns>
+        </member>
+        <member name="M:ACZ.Acz.ACZActHM">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ACZ.Acz.Inicializar">
+            <summary> Inicializar el estado de la clase</summary>
+            <returns> true / false</returns>
+        </member>
+        <member name="M:ACZ.Acz.Finalizar">
+            <summary> Finalizar el estado de la clase</summary>
+            <returns> true / false</returns>
+        </member>
+        <member name="M:ACZ.Acz.#ctor">
+            <summary> Constructor por defecto de la clase.</summary>
+        </member>
+        <member name="M:ACZ.Acz.#ctor(TF.Tf)">
+            <summary> Constructor de la clase.</summary>
+            <param name="oTF"> Objeto TF ya inicializado de acceso a la BBDD</param>
+            <seealso cref="M:ACZ.Acz.#ctor(System.String)"/>
+        </member>
+        <member name="M:ACZ.Acz.#ctor(System.String)">
+            <summary> Constructor de la clase</summary>
+            <param name="strCadenaDeConexion"> Cadena de conexión con la BBDD.</param>
+            <see cref="M:ACZ.Acz.#ctor(TF.Tf)"/>
+        </member>
+        <member name="M:ACZ.Acz.Finalize">
+            <summary> Destructor de la clase.</summary>
+        </member>
+        <member name="M:ACZ.Acz.ToString">
+            <summary> Sobrecarga de la función general ToString</summary>
+            <remarks> Devuelve una cadena con la descripción de la clase</remarks>
+        </member>
+        <member name="M:ACZ.Acz.Equals(System.Object)">
+            <summary> Sobrecarga de la función general Equals</summary>
+            <remarks> Compara dos objetos de la clase TF</remarks>
+            <returns> Devuelve true / false</returns>
+        </member>
+        <member name="M:ACZ.Acz.GetHashCode">
+            <summary> Sobrecarga de la función general GetHashCode</summary>
+        </member>
+        <member name="T:ACZ._Acz">
+            <summary>
+            Propiedades y métodos de uso interno de la clase genérica para acceso a funciones de BBDD.
+            </summary>
+        </member>
+        <member name="F:ACZ._Acz.__TFRf">
+            <summary> Acceso a BBDD, uso interno.</summary>
+        </member>
+        <member name="F:ACZ._Acz.__TFXml">
+            <summary> Acceso a ficheros XML.</summary>
+        </member>
+        <member name="P:ACZ._Acz.UsrErrorC">
+            <summary></summary>
+        </member>
+        <member name="P:ACZ._Acz.UsrError">
+            <summary></summary>
+        </member>
+        <member name="P:ACZ._Acz.UsrErrorE">
+            <summary></summary>
+        </member>
+        <member name="M:ACZ._Acz.#ctor">
+            <summary> Constructor por defecto de la clase</summary>
+        </member>
+        <member name="M:ACZ._Acz.Finalize">
+            <summary> Destructor por defecto de la clase</summary>
+        </member>
+    </members>
+</doc>

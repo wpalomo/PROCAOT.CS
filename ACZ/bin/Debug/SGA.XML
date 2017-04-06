@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<SGA>
+	<COMMON>
+		<PATHS>
+			<PATHPROCAOT concepto="Carpeta de trabajo del SGA">D:/PROYECTOS/SGA.NET/PROCAOT.VFP</PATHPROCAOT>
+			<PATHPRORAD  concepto="Carpeta de trabajo de RF">D:/PROYECTOS/SGA.NET/PRORAD.CS</PATHPRORAD>
+	    </PATHS>
+
+	    <FICHEROS>
+			<MENSAJES concepto="Fichero BBDD de mensajes">SGA</MENSAJES>
+	    </FICHEROS>
+
+	    <CONFIG>
+			<CONNDB concepto="Archivo configuración BBDD SGA">CONNDB.XML</CONNDB>
+			<MSI2   concepto="Archivo configuración SGA">MSI2.XML</MSI2>
+			<RADIO  concepto="Archivo configuración RF">RADIO.XML</RADIO>
+			<PRODIS concepto="Prodis / Procaot (S/N)">N</PRODIS>
+	    </CONFIG>
+
+		<DEFAULT>
+			<BBDD         concepto="Configuración del entorno de BBDD">
+				<ENTORNO  concepto="Sql Server">S</ENTORNO>
+				<VERSION  concepto="Versión 1.0">1.0</VERSION>
+				<PROVIDER concepto="ODBC">O</PROVIDER>
+			</BBDD>
+
+			<CODPRODEF  concepto="Propietario por defecto">000000</CODPRODEF>
+			<SITSTKEDEF concepto="Situación de Stock por defecto">1000</SITSTKEDEF>
+			<TIPMOVEDEF concepto="Tipo Movimiento de Entrada por defecto">1000</TIPMOVEDEF>
+			<TIPMOVSDEF concepto="Tipo Movimiento de Salida por defecto">2000</TIPMOVSDEF>
+
+			<SITSTKE  concepto="Situación de Stock Disponible">1000</SITSTKE>
+			<SITSTKB  concepto="Situación de Stock Bloqueado">9000</SITSTKB>
+
+			<TIPMOVE  concepto="Tipo Movimiento de Entrada">1000</TIPMOVE>
+			<TIPMOVS  concepto="Tipo Movimiento de Reserva">2000</TIPMOVS>
+			<TIPMOVX  concepto="Tipo Movimiento de Expedición">2999</TIPMOVX>
+			<TIPMOVR  concepto="Tipo Movimiento Consolidación">2998</TIPMOVR>
+			<TIPMOVO  concepto="Tipo Movimiento Salida Origen">3500</TIPMOVO>
+			<TIPMOVD  concepto="Tipo Movimiento Entrada Destino">3000</TIPMOVD>
+
+			<TIPMOVOB concepto="Tipo Movimiento Salida Bloqueo">3900</TIPMOVOB>
+			<TIPMOVDB concepto="Tipo Movimiento Entrada Bloqueo">3400</TIPMOVDB>
+			<TMOVINVE concepto="Tipo Movimiento Entrada por Inventario">4000</TMOVINVE>
+			<TMOVINVS concepto="Tipo Movimiento Salida Por Inventario">4500</TMOVINVS>
+		</DEFAULT>
+	</COMMON>
+</SGA>

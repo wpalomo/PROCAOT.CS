@@ -1,0 +1,402 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TF</name>
+    </assembly>
+    <members>
+        <member name="T:TF.Tf">
+             <summary> Clase genérica para acceso a funciones de BBDD.</summary>
+             
+             <remarks>
+             Información devuelta, según la función:
+                 this.SqlNoOfRows, nº de filas afectadas por la sentencia SQL.
+                 this.SqlDataRow, objeto DataTable con el registro leído.
+                 this.SqlDataTable, objeto DataTable obtenido.
+                 this.SqlTableReader, objeto secuencial TableReader sobre la tabla activa.
+                 this.SqlDataReader, objeto secuencial sobre el set de datos activos.
+                 this.SqlDataSet, objeto DataSet con el set de datos obtenido.
+                 this.SqlDataAdapter, objeto DataAdapter de trabajo.
+                 this.SqlSql, sentencia SQL generada.
+            
+             Gestión de la operación realizada:
+                 Resultado de la llamada:
+                     - S: Operación OK.
+                     - N: Operación no realizada.
+                     - C: Error BBDD / Error de programa.
+            
+                 Mensajes devueltos:
+                     - this.SqlStatus, 0: OK, -1: Error.
+                     - this.UsrErrorC, código de error (0: OK).
+                     - this.UsrError, texto del error.
+                     - this.UsrErrorE, texto error extendido - pila de llamadas.
+             </remarks>
+        </member>
+        <member name="M:TF.Tf.OdbcSeekRow(System.String,System.String,System.String,System.String,System.String)">
+             <summary> Leer registros de un fichero de la BBDD.</summary>
+             <remarks> Si resultado multi-row, devuelve el primer registro.</remarks>
+             <param name="SeekFichero">Nombre del fichero</param>
+             <param name="SeekFields">Columnas a devolver. Def: Todas</param>
+             <param name="SeekWhere">Claúsula de selección de registros. Def: Todos</param>
+             <param name="SeekOrder">Orden de las columnas. Def: Sin ordenar</param>
+             <param name="SeekGroup">Agrupación de registros. Def: Sin agrupación</param>
+             <returns>
+             Resultado (S-Hay filas/N-No hay filas/C-Error)
+             this.SqlNoOfRows, nº de filas devueltas.
+            </returns>
+        </member>
+        <member name="M:TF.Tf.OdbcDirectSQL(System.String)">
+            <summary>
+            Ejecución directa de una sentencia SQL que no devuelve datos.
+            </summary>
+            <param name="strSQL">Sentencia SQL a ejecutar</param>
+            <remarks>
+            Ejecuta sentencias SQL que no devuelven datos - Select / Insert / Update / Delete.
+            Si se ejecuta una sentencia Select, es solo a efectos de saber cuántas filas hay.
+            </remarks>
+            <returns>
+            Resultado (S-Hay filas/N-No hay filas/C-Error)
+            this.SqlNoOfRows, nº de filas afectadas.
+            </returns>
+        </member>
+        <member name="M:TF.Tf.OdbcUpdateCurrentRow(System.Data.Odbc.OdbcDataAdapter,System.Data.DataSet,System.Int32,System.Int32,System.Object[])">
+             <summary>
+             Actualizar los cambios del DataRow activo, en el DataAdpater activo, obtenido previamente con SeekOdbcRow.
+             Actualiza a partir de la PK de la tabla a actualizar.
+             </summary>
+             <param name="da">DataAdapater para actualizar</param>
+             <param name="ds">DataSet a actualizar</param>
+             <param name="dtIndex">Índice de la tabla en el DataRow</param>
+             <param name="drIndex">Fila de la tabla</param>
+             <param name="UpdColsValues">Columnas a actualizar, en formato Col1, value1, Col2, Value2, ..., ColN, ValueN</param>
+            <remarks>
+             Recibe un array con las columnas a actualizar con sus valores,
+             en formato Columna1, Valor1, Columna2, Valor2, ..., columnaN, ValorN.
+             Las tablas a actualizar DEBEN tener PK.
+             </remarks>
+             <seealso cref="M:TF.Tf.OdbcSeekRow(System.String,System.String,System.String,System.String,System.String)"/>
+             <returns>Resultado (S/N/C)</returns>
+        </member>
+        <member name="M:TF.Tf.OdbcUpdateCurrentRow(System.Data.Odbc.OdbcDataAdapter,System.Data.DataSet,System.Object[])">
+            <summary>
+            Actualizar un DataRow.
+            </summary>
+            <param name="da">DataAdapater para actualizar</param>
+            <param name="ds">DataSet a actualizar</param>
+            <param name="UpdColsValues">Columnas a actualizar, en formato Col1, value1, Col2, Value2, ..., ColN, ValueN</param>
+            <remarks> Recibe un array con las columnas a actualizar con sus valores,</remarks>
+            <remarks> en formato Columna1, Valor1, Columna2, Valor2, ..., columnaN, ValorN.</remarks>
+            <returns>Resultado (S/N/C)</returns>
+        </member>
+        <member name="M:TF.Tf.OdbcUpdateCurrentRowKO(System.Int32,System.Int32,System.Object[])">
+             <summary>
+             Actualizar los cambios del DataRow activo, en el DataAdpater activo, obtenido previamente con SeekOdbcRow.
+             </summary>
+             <param name="dtIndex">Índice de la tabla en el DataRow</param>
+             <param name="drIndex">Fila de la tabla</param>
+             <param name="UpdColsValues">Columnas a actualizar, en formato Col1, value1, Col2, Value2, ..., ColN, ValueN</param>
+            <remarks>
+             Recibe un array con las columnas a actualizar con sus valores,
+             en formato Columna1, Valor1, Columna2, Valor2, ..., columnaN, ValorN.
+             </remarks>
+             <seealso cref="M:TF.Tf.OdbcSeekRow(System.String,System.String,System.String,System.String,System.String)"/> cref=""/>
+             <returns>Resultado (S/N/C)</returns>
+        </member>
+        <member name="M:TF.Tf.OdbcUpdateCurrentRow(System.Object[])">
+            <summary>
+            Actualizar un DataRow
+            </summary>
+            <param name="UpdColsValues">Columnas a actualizar, en formato Col1, value1, Col2, Value2, ..., ColN, ValueN</param>
+            <remarks> Recibe un array con las columnas a actualizar con sus valores,</remarks>
+            <remarks> en formato Columna1, Valor1, Columna2, Valor2, ..., columnaN, ValorN.</remarks>
+            <returns>Resultado (S/N/C)</returns>
+        </member>
+        <member name="M:TF.Tf.GetCvtSubStr(TF._Tf.DBEnvironments,System.String,System.String,System.Int32,System.Int32)">
+            <summary> Obtener formato para leer una subcadena de una columna de un fichero - Método</summary>
+            <param name="dbEnvironment">Entorno activo de a BBDD</param>
+            <param name="dbVersion">Versión de la BBDD</param>
+            <param name="dbColumna">Nombre de la columna de la BBDD</param>
+            <param name="posicionInicial">Posición inicial de la subcadena</param>
+            <param name="lenPosicionFinal">Longitud / posición final de la subcadena</param>
+            <returns>Formato de acceso a la subcadena de la columna</returns>
+        </member>
+        <member name="M:TF.Tf.GetCvtCat(TF._Tf.DBEnvironments,System.String)">
+            <summary> Obtener formato para concatenar columnas de un fichero de la BBDD - Método</summary>
+            <param name="dbEnvironment">Entorno activo de a BBDD</param>
+            <param name="dbVersion">Versión de la BBDD</param>
+            <returns>Formato para concatenar columnas</returns>
+        </member>
+        <member name="M:TF.Tf.GetCvtLike(TF._Tf.DBEnvironments,System.String)">
+            <summary> Obtener formato de la función LIKE en sentencias SQL - Método</summary>
+            <param name="dbEnvironment">Entorno activo de a BBDD</param>
+            <param name="dbVersion">Versión de la BBDD</param>
+            <returns>Formato para la función LIKE</returns>
+        </member>
+        <member name="M:TF.Tf._GCSS(System.String,System.Int32,System.Int32)">
+            <summary> Obtener formato para leer una subcadena de una columna de un fichero - Macro</summary>
+            <remarks> Accede al método GetCvtSubStr</remarks>
+            <remarks> Asume Entorno y Versión DDBB por defecto al inicializar la clase</remarks>
+            <param name="dbColumna">Nombre de la columna de la BBDD</param>
+            <param name="posInicial">Posición inicial de la subcadena</param>
+            <param name="lenPosFinal">Longitud / posición final de la subcadena</param>
+            <seealso cref="M:TF.Tf.GetCvtSubStr(TF._Tf.DBEnvironments,System.String,System.String,System.Int32,System.Int32)"/>
+            <returns>Formato de acceso a la subcadena de la columna</returns>
+        </member>
+        <member name="M:TF.Tf._GCC">
+            <summary> Obtener formato para concatenar columnas de un fichero de la BBDD - Macro</summary>
+            <seealso cref="M:TF.Tf.GetCvtCat(TF._Tf.DBEnvironments,System.String)"/>
+            <returns>Columnas concatenadas</returns>
+        </member>
+        <member name="M:TF.Tf._GCC(System.String[])">
+            <summary> Obtener formato para concatenar columnas de un fichero de la BBDD - Macro</summary>
+            <param name="colsToConcat">Columnas a concaternar, en formato Col1, Col2, ---, ColN</param>
+            <seealso cref="M:TF.Tf.GetCvtCat(TF._Tf.DBEnvironments,System.String)"/>
+            <returns>Columnas concatenadas</returns>
+        </member>
+        <member name="M:TF.Tf._GCL">
+            <summary> Obtener formato de la función LIKE en sentencias SQL - Método</summary>
+            <seealso cref="M:TF.Tf.GetCvtLike(TF._Tf.DBEnvironments,System.String)"/>
+            <returns>Formato para la función LIKE</returns>
+        </member>
+        <member name="M:TF.Tf._GCL(System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary> Obtener formato de la función LIKE en sentencias SQL - Macro</summary>
+            <param name="valueToLike"> Columna a formatear con LIKE</param>
+            <param name="likeLeft"> Aplicar LIKE a la izquierda. Def: false</param>
+            <param name="likeRight"> Aplicar LIKE a la derecha. Def: true</param>
+            <param name="trimLeft"> Eliminar espacios a la izquierda de la columna. Def: false</param>
+            <param name="trimRight"> Eliminar espacios a la derecha de la columna. Def: false</param>
+            <seealso cref="M:TF.Tf.GetCvtLike(TF._Tf.DBEnvironments,System.String)"/>
+            <returns>Columna formateada para la función LIKE</returns>
+        </member>
+        <member name="M:TF.Tf.NewNum(TF._Tf.DBEnvironments,System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="dbEntorno"></param>
+            <param name="dbVersion"></param>
+            <param name="Numerador"></param>
+            <param name="nLongitud"></param>
+            <param name="nCuantos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TF.Tf.NewNum(System.String,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="Numerador"></param>
+            <param name="nLongitud"></param>
+            <param name="nCuantos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TF.Tf.Inicializar(System.String,TF._Tf.DBEnvironments,System.String,TF._Tf.DBProviders)">
+            <summary> Inicializar el estado de la clase</summary>
+            <returns> true / false</returns>
+        </member>
+        <member name="M:TF.Tf.Finalizar">
+            <summary> Finalizar el estado de la clase</summary>
+            <returns> true / false</returns>
+        </member>
+        <member name="M:TF.Tf.#ctor">
+            <summary> Constructor por defecto de la clase</summary>
+        </member>
+        <member name="M:TF.Tf.#ctor(System.Data.Odbc.OdbcConnection)">
+            <summary> Constructor de la clase</summary>
+            <param name="cmConn"> Objeto Command de acceso a la BBDD</param>
+        </member>
+        <member name="M:TF.Tf.#ctor(System.String)">
+            <summary> Constructor de la clase</summary>
+            <param name="strCadenaDeConexion"> Cadena de conexión con la BBDD</param>
+        </member>
+        <member name="M:TF.Tf.Finalize">
+            <summary> Destructor de la clase</summary>
+            <remarks> Elimina la conexión con la DDBB</remarks>
+        </member>
+        <member name="M:TF.Tf.ToString">
+            <summary> Sobrecarga de la función general ToString</summary>
+            <remarks> Devuelve una cadena con la descripción de la clase</remarks>
+        </member>
+        <member name="M:TF.Tf.Equals(System.Object)">
+            <summary> Sobrecarga de la función general Equals</summary>
+            <remarks> Compara dos objetos de la clase TF</remarks>
+            <returns> Devuelve true / false</returns>
+        </member>
+        <member name="M:TF.Tf.GetHashCode">
+            <summary> Sobrecarga de la función general GetHashCode</summary>
+        </member>
+        <member name="T:TF.Xml">
+            <summary> Clase genérica para acceso a ficheros XML</summary>
+        </member>
+        <member name="M:TF.Xml.LoadXmlFile(System.String)">
+            <summary>
+            Cargar el contenido de un archivo en formato XML
+            </summary>
+            <param name="pathFichero">Nombre del fichero XML a cargar</param>
+            <returns>Resultado (S/N)</returns>
+        </member>
+        <member name="M:TF.Xml.XmlSeekSingleKeyValue(System.Xml.XmlDocument,System.String,System.String@)">
+            <summary> Obtener el valor de una clave - Devuelve estado</summary>
+            <remarks>
+            Lee un fichero XML cargado previamente
+            Devuelve resultado operación
+            Devuelve el valor de la clave como parámetro de salida
+            </remarks>
+            <param name="xDoc"> Nombre del fichero XML</param>
+            <param name="keyName"> Nombre de la clave (Nodo) a leer</param>
+            <param name="keyValue"> Valor de la clave (Nodo) a leer</param>
+            <returns>Resultado (S/N)</returns>
+        </member>
+        <member name="M:TF.Xml.XmlSeekSingleKeyValue(System.String,System.Xml.XmlDocument)">
+            <summary> Obtener el valor de una clave - Devuelve valor</summary>
+            <remarks>
+            Lee un fichero XML cargado previamente
+            Devuelve directamente el valor de la clave como parámetro de salida
+            </remarks>
+            <param name="keyName"> Nombre de la clave (Nodo) a leer</param>
+            <param name="xDoc"> Nombre del fichero XML. Def: XDocumento por defecto</param>
+            <returns>Valor de la clave (Nodo) solicitada</returns>
+        </member>
+        <member name="M:TF.Xml.XmlSeekSingleKeyValue(System.String,System.String)">
+            <summary> Obtener el valor de una clave - Devuelve valor</summary>
+            <remarks>
+            Lee un fichero XML cargado previamente
+            Devuelve directamente el valor de la clave como parámetro de salida
+            </remarks>
+            <param name="keyName"> Nombre de la clave (Nodo) a leer</param>
+            <param name="docName"> Nombre del fichero XML a cargar</param>
+            <returns>Valor de la clave (Nodo) solicitada</returns>
+        </member>
+        <member name="M:TF.Xml.XmlSeekSingleKeyAttribute">
+            <summary> Obtener el atributo de una clave - Devuelve resultado</summary>
+            <remarks>
+            </remarks>
+            <returns>Resultado (S/N)</returns>
+        </member>
+        <member name="M:TF.Xml.#ctor">
+            <summary> Constructor por defecto de la clase</summary>
+        </member>
+        <member name="M:TF.Xml.#ctor(System.String)">
+            <summary> Constructor de la clase</summary>
+            <param name="pathFichero"> Path fichero en formato XML a cargar</param>
+        </member>
+        <member name="T:TF._Tf">
+            <summary>
+            Propiedades y métodos de uso interno de la clase genérica para acceso a funciones de BBDD.
+            </summary>
+        </member>
+        <member name="T:TF._Tf.DBProviders">
+            <summary> Proveedores de acceso a BBDD</summary>
+        </member>
+        <member name="F:TF._Tf.DBProviders.ODBC">
+            <summary></summary>
+        </member>
+        <member name="F:TF._Tf.DBProviders.ADO">
+            <summary></summary>
+        </member>
+        <member name="F:TF._Tf.DBProviders.OLEDB">
+            <summary></summary>
+        </member>
+        <member name="T:TF._Tf.DBEnvironments">
+            <summary> Entoornos de trabajo de BBDD</summary>
+        </member>
+        <member name="F:TF._Tf.DBEnvironments.SQL">
+            <summary></summary>
+        </member>
+        <member name="F:TF._Tf.DBEnvironments.DB2">
+            <summary></summary>
+        </member>
+        <member name="F:TF._Tf.DBEnvironments.ORACLE">
+            <summary></summary>
+        </member>
+        <member name="F:TF._Tf.DBEnvironments.MSACCESS">
+            <summary></summary>
+        </member>
+        <member name="F:TF._Tf.DBEnvironments.VFP">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Tf._DBEntorno">
+            <summary> Entorno activo de BBDD</summary>
+        </member>
+        <member name="P:TF._Tf._DBVersion">
+            <summary> Versión activa de la BBDD</summary>
+        </member>
+        <member name="P:TF._Tf._DBProvider">
+            <summary> Proveedor activo de BBDD</summary>
+        </member>
+        <member name="P:TF._Tf._DBConcat">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Tf._DBLike">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Tf.SqlStatus">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Tf.SqlSQL">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Tf.SqlNoOfRows">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Tf.UsrErrorC">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Tf.UsrError">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Tf.UsrErrorE">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Tf.SqlDataAdapter">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Tf.SqlDataSet">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Tf.SqlTableReader">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Tf.SqlDataReader">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Tf.SqlDataTable">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Tf.SqlDataRow">
+            <summary></summary>
+        </member>
+        <member name="M:TF._Tf.#ctor">
+            <summary> Constructor por defecto de la clase</summary>
+        </member>
+        <member name="T:TF._Xml">
+            <summary>
+            Propiedades y métodos de uso interno de la clase genérica para acceso a ficheros en formato XML.
+            </summary>
+        </member>
+        <member name="P:TF._Xml.XmlStatus">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Xml.XmlNoOfElements">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Xml.UsrErrorC">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Xml.UsrError">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Xml.UsrErrorE">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Xml.XMLDocument">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Xml.XMLKeyValue">
+            <summary></summary>
+        </member>
+        <member name="P:TF._Xml.XMLAttrValue">
+            <summary></summary>
+        </member>
+        <member name="M:TF._Xml.#ctor">
+            <summary> Constructor por defecto de la clase</summary>
+        </member>
+    </members>
+</doc>

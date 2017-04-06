@@ -1,0 +1,6 @@
+D:\PROYECTOS\TORSESA\SGA.NET\PROCAOT.CS\XmlTest\bin\Debug\XmlTest.exe.config
+D:\PROYECTOS\TORSESA\SGA.NET\PROCAOT.CS\XmlTest\bin\Debug\XmlTest.exe
+D:\PROYECTOS\TORSESA\SGA.NET\PROCAOT.CS\XmlTest\bin\Debug\XmlTest.pdb
+D:\PROYECTOS\TORSESA\SGA.NET\PROCAOT.CS\XmlTest\obj\Debug\XmlTest.exe
+D:\PROYECTOS\TORSESA\SGA.NET\PROCAOT.CS\XmlTest\obj\Debug\XmlTest.pdb
+D:\PROYECTOS\TORSESA\SGA.NET\PROCAOT.CS\XmlTest\obj\Debug\XmlTest.csprojResolveAssemblyReference.cache
